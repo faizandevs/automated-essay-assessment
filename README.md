@@ -1,6 +1,14 @@
 # Essay Evaluation API
 
-An AI-powered API that evaluates essay answers against questions using Google's Gemini model.
+An AI-powered API that evaluates essay answers against questions using Google's Gemini model. Created for an android application feature.
+
+## Test API with Live Demo Frontend
+
+Live API:
+https://automated-essay-assessment-5k2f.onrender.com
+
+Demo Frontend:
+https://automated-essay-assessment.vercel.app/
 
 ## Setup
 
