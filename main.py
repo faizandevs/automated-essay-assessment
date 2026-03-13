@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import os
 from dotenv import load_dotenv
@@ -10,6 +11,16 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 
 app = FastAPI(title="Essay Evaluation API")
+
+# ---- CORS MIDDLEWARE (ADDED) ----
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # allow all domains (good for testing)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+# ---------------------------------
 
 class EssayInput(BaseModel):
     content: str
@@ -38,6 +49,8 @@ If the answer relates to the question, respond with a mark between 1 to 100 base
 Respond ONLY with a number (0-100), nothing else."""
     
     response = model.generate_content(prompt)
-    mark = int(response.text.strip())
-    
+
+    # safer conversion
+    mark = int(response.text.strip().replace(".", ""))
+
     return {"mark": mark}
